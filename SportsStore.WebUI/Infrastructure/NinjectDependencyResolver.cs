@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Moq;
 using Ninject;
 using SportsStore.Domain.Abstract;
+using SportsStore.Domain.Concrete;
 using SportsStore.Domain.Entities;
 
 namespace SportsStore.WebUI.Infrastructure
@@ -23,18 +24,22 @@ namespace SportsStore.WebUI.Infrastructure
         private void AddBindings()
         {
             //Put bindings here
-            
-            //Fake repos
-            Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
-            mockRepository.Setup(repos => repos.Products).Returns(new List<Product>
-            {
-                new Product {Name = "Football",Price = 25},
-                new Product {Name = "Surf Board",Price = 179},
-                new Product {Name = "Running shoes",Price = 95},
-            });
 
-            //Every time i call an object that implement IProductRepository i obtain the same mock object
-            kernel.Bind<IProductRepository>().ToConstant(mockRepository.Object);
+            //Fake repos for debugging
+            //Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
+            //mockRepository.Setup(repos => repos.Products).Returns(new List<Product>
+            //{
+            //    new Product {Name = "Football",Price = 25},
+            //    new Product {Name = "Surf Board",Price = 179},
+            //    new Product {Name = "Running shoes",Price = 95},
+            //});
+
+            ////Every time i call an object that implement IProductRepository i obtain the same mock object
+            //kernel.Bind<IProductRepository>().ToConstant(mockRepository.Object);
+
+            //Set the DI that every time an IProductRepository is called it will be of the class EFProductRepos
+            kernel.Bind<IProductRepository>().To<EFProductRepository>();
+
         }
 
         public object GetService(Type serviceType)
