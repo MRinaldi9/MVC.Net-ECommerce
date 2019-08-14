@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SportsStore.Domain.Abstract;
 using SportsStore.Domain.Entities;
+using SportsStore.WebUI.Models;
 
 namespace SportsStore.WebUI.Controllers
 {
@@ -20,10 +21,22 @@ namespace SportsStore.WebUI.Controllers
 
         public ViewResult List(int page = 1)
         {
-            return View(repository.Products
-                        .OrderBy(product => product.ProductID)
-                        .Skip((page - 1) * PageSize)
-                        .Take(PageSize));
+            ProductListVIewModel model = new ProductListVIewModel
+            {
+                Products = repository.Products
+                           .OrderBy(product => product.ProductID)
+                           .Skip((page - 1) * PageSize)
+                           .Take(PageSize),
+
+                _PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = repository.Products.Count()
+                }
+            };
+
+            return View(model);
         }
     }
 }
