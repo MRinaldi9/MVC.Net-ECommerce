@@ -5,6 +5,7 @@ using SportsStore.WebUI.Models;
 
 namespace SportsStore.WebUI.HtmlHelpers
 {
+    //class helper for creating a pagination link button 
     public static class PagingHelpers
     {
         public static MvcHtmlString PageLinks(this HtmlHelper html,PagingInfo info, Func<int, string> pageUrl)
@@ -18,9 +19,12 @@ namespace SportsStore.WebUI.HtmlHelpers
                 if(i == info.CurrentPage)
                 {
                     tag.AddCssClass("selected");
-                    tag.AddCssClass("btn-primary");
+                    tag.AddCssClass("btn btn-primary");
                 }
-                tag.AddCssClass("btn btn-default");
+                else
+                {
+                    tag.AddCssClass("btn btn-secondary");
+                }                
                 result.Append(tag.ToString());
             }
             return MvcHtmlString.Create(result.ToString());
