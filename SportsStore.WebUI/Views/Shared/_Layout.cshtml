@@ -3,9 +3,21 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-united.css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div>@RenderBody()</div>
+    <div class="navbar navbar-light bg-primary" role="navigation">
+        <a class="navbar-brand" href="#">SPORTS STORE</a>
+    </div>
+    <div class="row">
+        <div id="categories" class="col-3">
+            Put something useful here later
+        </div>
+        <div class="col-9">
+            @RenderBody()
+        </div>
+    </div>
 </body>
 </html>
