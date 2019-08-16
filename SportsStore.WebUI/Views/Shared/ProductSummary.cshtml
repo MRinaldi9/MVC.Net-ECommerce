@@ -2,9 +2,19 @@
 
 
 <div class="card bg-light my-1">
-    <h3>
-        <strong>@Model.Name</strong>
-        <span class="badge badge-pill badge-primary float-right">@Model.Price.ToString("c")</span>
-    </h3>
-    <span class="lead">@Model.Description</span>
+    <div class="card-body">
+        <h3>
+            <strong>@Model.Name</strong>
+            <span class="badge badge-pill badge-primary float-right">@Model.Price.ToString("c")</span>
+        </h3>
+        <span class="lead">@Model.Description</span>
+        @using (Html.BeginForm("AddToCart", "Cart"))
+        {
+            <div class="float-right">
+                @Html.HiddenFor(x => x.ProductID)
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                <input type="submit" class="btn btn-info" value="Add to cart" />
+            </div>
+        }
+    </div>
 </div>
