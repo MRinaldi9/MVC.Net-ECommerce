@@ -8,10 +8,13 @@
             <span class="badge badge-pill badge-primary float-right">@Model.Price.ToString("c")</span>
         </h3>
         <span class="lead">@Model.Description</span>
+        <!-- BeginForm start a form tag with, in this case, the name of action to send the submitted data and controller name -->
         @using (Html.BeginForm("AddToCart", "Cart"))
         {
             <div class="float-right">
+                <!--Create a input tag field hidden where each property is setted with the value of the property passed in method-->
                 @Html.HiddenFor(x => x.ProductID)
+                <!--Create a input tag hidden setting name and id with the first parameter while in the second parameter we set the value of -->
                 @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
                 <input type="submit" class="btn btn-info" value="Add to cart" />
             </div>

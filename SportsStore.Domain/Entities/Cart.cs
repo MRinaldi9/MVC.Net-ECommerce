@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SportsStore.Domain.Entities
 {
+    //Object to represent the object and quantity in the cart
     public class CartLine
     {
         public Product _Product { get; set; }
