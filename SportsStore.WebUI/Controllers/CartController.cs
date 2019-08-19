@@ -18,46 +18,46 @@ namespace SportsStore.WebUI.Controllers
             this.repository = repo;
         }
 
-        public ViewResult Index(string returnUrl)
+        public ViewResult Index(Cart cart, string returnUrl)
         {
             //Pass to the view the model CartIndexViewModel with the object Cart and URL to return when continue the shopping
-            return View(new CartIndexViewModel { _Cart = GetCart(), ReturnUrl = returnUrl });
+            return View(new CartIndexViewModel { _Cart = cart, ReturnUrl = returnUrl });
         }
 
         //Get (and set) cart object through Session that use cookie
-        private Cart GetCart()
-        {
-            Cart cart = (Cart)Session["Cart"];
-            if (cart == null)
-            {
-                cart = new Cart();
-                Session["Cart"] = cart;
-            }
-            return cart;
-        }
+        //private Cart GetCart()
+        //{
+        //    Cart cart = (Cart)Session["Cart"];
+        //    if (cart == null)
+        //    {
+        //        cart = new Cart();
+        //        Session["Cart"] = cart;
+        //    }
+        //    return cart;
+        //}
 
         //Using parameters that are equal to the input field allows the MVC framework to associate them with the variable of the form
         //and avoid to process manually the form
-        public RedirectToRouteResult AddToCart(int productID, string returnUrl)
+        public RedirectToRouteResult AddToCart(Cart cart, int productID, string returnUrl)
         {
             Product product = repository.Products.FirstOrDefault(p => p.ProductID == productID);
 
             if (product != null)
             {
-                GetCart().AddItem(product, 1);
+                cart.AddItem(product, 1);
             }
             //redirecttoaction has the effect of sending a HTTP redirect instruction for asking, at browser, a new URL.
             //In this case redirection pass through the Index action method 
             return RedirectToAction("Index", new { returnUrl });
         }
 
-        public RedirectToRouteResult RemoveFromCart(int productID, string returnUrl)
+        public RedirectToRouteResult RemoveFromCart(Cart cart, int productID, string returnUrl)
         {
             Product product = repository.Products.FirstOrDefault(p => p.ProductID == productID);
 
             if (product != null)
             {
-                GetCart().RemoveLine(product);
+                cart.RemoveLine(product);
             }
             return RedirectToAction("Index", new { returnUrl });
         }
