@@ -24,6 +24,11 @@ namespace SportsStore.WebUI.Controllers
             return View(new CartIndexViewModel { _Cart = cart, ReturnUrl = returnUrl });
         }
 
+        public PartialViewResult Summary(Cart cart)
+        {
+            return PartialView(cart);
+        }
+
         //Get (and set) cart object through Session that use cookie
         //private Cart GetCart()
         //{
