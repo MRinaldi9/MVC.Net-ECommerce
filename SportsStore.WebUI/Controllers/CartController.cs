@@ -12,10 +12,12 @@ namespace SportsStore.WebUI.Controllers
     public class CartController : Controller
     {
         private readonly IProductRepository repository;
+        private readonly IOrderProcessor orderProcessor;
 
-        public CartController(IProductRepository repo)
+        public CartController(IProductRepository repo, IOrderProcessor processor)
         {
             this.repository = repo;
+            this.orderProcessor = processor;
         }
 
         public ViewResult Index(Cart cart, string returnUrl)
@@ -32,6 +34,26 @@ namespace SportsStore.WebUI.Controllers
         public ViewResult Checkout()
         {
             return View(new ShippingDetails());
+        }
+
+        [HttpPost]
+        public ViewResult Checkout(Cart cart, ShippingDetails details)
+        {
+            if (cart.Lines.Count() == 0)
+            {
+                ModelState.AddModelError("", "Sorry your cart is empty");
+            }
+
+            if (ModelState.IsValid)
+            {
+                orderProcessor.ProcessOrder(cart, details);
+                cart.Clear();
+                return View("Completed!");
+            }
+            else
+            {
+                return View(details);
+            }
         }
 
         //Get (and set) cart object through Session that use cookie

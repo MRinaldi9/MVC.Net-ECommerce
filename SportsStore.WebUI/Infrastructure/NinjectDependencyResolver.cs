@@ -7,6 +7,7 @@ using Moq;
 using Ninject;
 using SportsStore.Domain.Abstract;
 using SportsStore.Domain.Concrete;
+using System.Configuration;
 using SportsStore.Domain.Entities;
 
 namespace SportsStore.WebUI.Infrastructure
@@ -39,6 +40,13 @@ namespace SportsStore.WebUI.Infrastructure
 
             //Set the DI that every time an IProductRepository is called it will be of the class EFProductRepos
             kernel.Bind<IProductRepository>().To<EFProductRepository>();
+
+            EmailSettings emailSettings = new EmailSettings
+            {
+                WriteAsFile = bool.Parse(ConfigurationManager.AppSettings["Email.WriteAsFile"] ?? "false")
+            };
+
+            kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>().WithConstructorArgument("settings", emailSettings);
 
         }
 
