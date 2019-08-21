@@ -48,7 +48,7 @@ namespace SportsStore.WebUI.Controllers
             {
                 orderProcessor.ProcessOrder(cart, details);
                 cart.Clear();
-                return View("Completed!");
+                return View("Completed");
             }
             else
             {

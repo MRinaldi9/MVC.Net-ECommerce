@@ -5,20 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--<link href="~/Content/bootstrap.css" rel="stylesheet" />-->
     <link href="~/Content/bootstrap-united.css" rel="stylesheet" />
+    <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/be299d0f57.js"></script>
+    <style>
+        .navbar-text {
+            color: lightsteelblue !important;
+        }
+    </style>
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div class="navbar navbar-light bg-primary" role="navigation">
-        <a class="navbar-brand justify-content-center" href="#">SPORTS STORE</a>
-        @Html.Action("Summary","Cart")
+    <div class="navbar navbar-dark bg-primary" role="navigation">
+        <a class="navbar-brand" href="#">
+            <span class="d-none d-sm-block">SPORTS STORE</span>
+            <div class="d-block d-sm-none">SPORTS</div>
+            <div class="d-block d-sm-none">STORE</div>
+        </a>
+        @Html.Action("Summary", "Cart")
     </div>
     <div class="row">
-        <div id="categories" class="col-sm-2" >
+        <div id="categories" class="col-sm-2">
             @Html.Action("Menu", "Nav")
         </div>
         <div class="col-sm-9">
             @RenderBody()
         </div>
     </div>
+    
 </body>
 </html>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -18,12 +19,13 @@ namespace SportsStore.Domain.Concrete
         public string ServerName = "smtp.example.com";
         public int ServerPort = 587;
         public bool WriteAsFile = false;
-        public string FileLocation = @"c:\Desktop";
+        public string FileLocation = @"C:\Users\marco\Desktop";
     }
 
     public class EmailOrderProcessor : IOrderProcessor
     {
         private EmailSettings emailSettings;
+        CultureInfo culture = new CultureInfo("it-IT");
 
         public EmailOrderProcessor(EmailSettings settings)
         {
@@ -55,10 +57,10 @@ namespace SportsStore.Domain.Concrete
                 foreach (var line in cart.Lines)
                 {
                     var subtotal = line.Quantity * line._Product.Price;
-                    sb.AppendFormat($"{line.Quantity} x {line._Product.Name} (subtotal: {subtotal:c}");
+                    sb.AppendFormat(culture, "{0} x {1} (subtotal: {2:c}) ", line._Product.Name, line.Quantity, subtotal).AppendLine();
                 }
-
-                sb.AppendFormat($"Total order value: {cart.ComputeTotalValue():c}")
+                sb.AppendFormat(culture, "Total order value: {0:c}", cart.ComputeTotalValue())
+                    .AppendLine()
                     .AppendLine("---")
                     .AppendLine("Ship to:")
                     .AppendLine(shippingDetails.Name)
@@ -81,7 +83,7 @@ namespace SportsStore.Domain.Concrete
 
                 if (emailSettings.WriteAsFile)
                 {
-                    mailMessage.BodyEncoding = Encoding.ASCII;
+                    mailMessage.BodyEncoding = Encoding.UTF8;
                 }
 
                 smtpClient.Send(mailMessage);
