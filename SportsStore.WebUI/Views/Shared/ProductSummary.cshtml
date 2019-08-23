@@ -3,13 +3,15 @@
 
 <div class="card bg-light my-1">
     <div class="card-body">
-        <h3>
-            <strong>@Model.Name</strong>
+        <h3 class="mb-sm-2">
+            <strong class="d-none d-sm-inline-block">@Model.Name</strong>
+            <strong class="d-inline-block d-sm-none h-50 w-50">@Model.Name</strong>
             <span class="badge badge-pill badge-primary float-right">@Model.Price.ToString("c")</span>
         </h3>
-        <span class="lead">@Model.Description</span>
+        <span class="lead d-none d-sm-block">@Model.Description</span>
+        <span class="lead d-inline-block d-sm-none w-50">@Model.Description</span>
         <!-- BeginForm start a form tag with, in this case, the name of action to send the submitted data and controller name -->
-        @using (Html.BeginForm("AddToCart", "Cart"))
+        @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post, new { @class = "float-right" }))
         {
             <div class="float-right">
                 <!--Create a input tag field hidden where each property is setted with the value of the property passed in method-->

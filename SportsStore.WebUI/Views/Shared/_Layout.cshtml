@@ -6,15 +6,17 @@
     <!--<link href="~/Content/bootstrap.css" rel="stylesheet" />-->
     <link href="~/Content/bootstrap-united.css" rel="stylesheet" />
     <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="#" />
     <script src="https://kit.fontawesome.com/be299d0f57.js"></script>
-    <style>
-        .navbar-text {
-            color: lightsteelblue !important;
-        }
-    </style>
+
     <title>@ViewBag.Title</title>
 </head>
 <body>
+    <style>
+        .navbar-text {
+            color: black !important;
+        }
+    </style>
     <div class="navbar navbar-dark bg-primary" role="navigation">
         <a class="navbar-brand" href="#">
             <span class="d-none d-sm-block">SPORTS STORE</span>
@@ -23,14 +25,19 @@
         </a>
         @Html.Action("Summary", "Cart")
     </div>
+
+    <div class="d-block d-sm-none">
+        @Html.Action("Menu", "Nav", new { horizontalLayout = true })
+    </div>
+
     <div class="row">
-        <div id="categories" class="col-sm-2">
+        <div id="categories" class="col-sm-3 d-none d-sm-block">
             @Html.Action("Menu", "Nav")
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-8">
             @RenderBody()
         </div>
     </div>
-    
+
 </body>
 </html>
