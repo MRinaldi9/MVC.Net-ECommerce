@@ -211,7 +211,7 @@ namespace SportsStore.Tests
 
             mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()), Times.Once());
 
-            Assert.AreEqual("Completed!", result.ViewName);
+            Assert.AreEqual("Completed", result.ViewName);
             Assert.AreEqual(true, result.ViewData.ModelState.IsValid);
         }
     }
