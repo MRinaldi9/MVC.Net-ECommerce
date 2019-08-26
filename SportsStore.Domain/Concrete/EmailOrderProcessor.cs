@@ -25,7 +25,7 @@ namespace SportsStore.Domain.Concrete
     public class EmailOrderProcessor : IOrderProcessor
     {
         private EmailSettings emailSettings;
-        CultureInfo culture = new CultureInfo("it-IT");
+        private readonly CultureInfo culture = new CultureInfo("it-IT");
 
         public EmailOrderProcessor(EmailSettings settings)
         {
