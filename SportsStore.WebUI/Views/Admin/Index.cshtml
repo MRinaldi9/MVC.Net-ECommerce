@@ -21,12 +21,12 @@
             {
                 <tr>
                     <td class="text-center">@item.ProductID</td>
-                    <td class="text-center">@Html.ActionLink(item.Name, "Edit", new { item.ProductID },new {@class = "text-info" })</td>
+                    <td class="text-center">@Html.ActionLink(item.Name, "Edit", new { item.ProductID }, new { @class = "text-info" })</td>
                     <td class="text-center">@item.Price.ToString("c")</td>
                     <td class="text-center">
                         @using (Html.BeginForm("Delete", "Admin"))
                         {
-                            Html.Hidden("ProductID", item.ProductID);
+                            @Html.Hidden("ProductID", item.ProductID)
                             <input type="submit" class="btn btn-secondary btn-sm" value="Delete" />
                         }
                     </td>
