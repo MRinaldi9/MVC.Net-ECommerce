@@ -3,6 +3,9 @@
 @{
     ViewBag.Title = "Admin: Edit " + Model.Name;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    //With this two property of htmlhelper it's possible set data client validation before input in server
+    //HtmlHelper.ClientValidationEnabled = false;
+    //HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
 }
 
 <div class="card">
@@ -11,7 +14,7 @@
     </div>
 
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Edit", "Admin"))
     {
         <div class="card-body">
             @Html.HiddenFor(p => p.ProductID)

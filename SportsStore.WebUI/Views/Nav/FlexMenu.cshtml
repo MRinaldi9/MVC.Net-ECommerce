@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<string>
 
 @{
-    //with ViewContext property i can check data about request processing, even routing information like this case 
+    /**/
+
+    //with ViewContext property i can check data about request processing, even routing information like this case
     bool horizontal = ((bool)(ViewContext.RouteData.Values["horizontalLayout"] ?? false));
     string wrapperClass = horizontal ? "d-flex btn-group btn-group-sm justify-content-center" : null;
 }
@@ -9,7 +11,7 @@
 
 
 <div class="@wrapperClass">
-    @Html.ActionLink("Home","List","Product",
+    @Html.ActionLink("Home","List","Product",null,
     new { @class = horizontal ? "btn btn-sm " + (ViewBag.SelectedCategory == null ? " btn-info" : " btn-secondary") :
                                 "btn btn-block" + (ViewBag.SelectedCategory == null ? " btn-info" : " btn-secondary")})
 
