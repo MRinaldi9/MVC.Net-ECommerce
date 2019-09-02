@@ -3,6 +3,13 @@
 
 <div class="card bg-light my-1">
     <div class="card-body">
+        @if (Model.ImageData != null)
+        {
+            <div class="float-left mr-2">
+                <img class="img-thumbnail" width="75" height="75"
+                     src="@Url.Action("GetImage","Product",new { Model.ProductID })" />
+            </div>
+        }
         <h3 class="mb-sm-2">
             <strong class="d-none d-sm-inline-block">@Model.Name</strong>
             <strong class="d-inline-block d-sm-none h-50 w-50">@Model.Name</strong>

@@ -1,5 +1,4 @@
 ﻿@model SportsStore.Domain.Entities.Product
-
 @{
     ViewBag.Title = "Admin: Edit " + Model.Name;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -13,29 +12,60 @@
         <h3>Edit @Model.Name</h3>
     </div>
 
-
-    @using (Html.BeginForm("Edit", "Admin"))
+    <!--Enctype attribute with value multipart/form-data is needed when uploading something on the server if you are using a form-->
+    @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div class="card-body">
             @Html.HiddenFor(p => p.ProductID)
             @foreach (var prop in ViewData.ModelMetadata.Properties)
             {
-                if (prop.PropertyName != "ProductID")
+                switch (prop.PropertyName)
                 {
-                    <div class="form-group">
-                        <label>@(prop.DisplayName ?? prop.PropertyName)</label>
-                        @if (prop.PropertyName == "Description")
-                        {
-                            @Html.TextArea(prop.PropertyName, null, new { @class = "form-control", rows = 5 })
-                        }
-                        else
-                        {
-                            @Html.TextBox(prop.PropertyName, null, new { @class = "form-control" })
-                        }
-                        @Html.ValidationMessage(prop.PropertyName)
-                    </div>
+                    case "ProductID":
+                    case "ImageData":
+                    case "ImageMimeType":
+                        break;
+                    default:
+                        <div class="form-group">
+                            <label>@(prop.DisplayName ?? prop.PropertyName)</label>
+                            @if (prop.PropertyName == "Description")
+                            {
+                                @Html.TextArea(prop.PropertyName, null, new { @class = "form-control", rows = 5 })
+                            }
+                            else if (prop.PropertyName == "Price")
+                            {
+                                @Html.TextBox(prop.PropertyName, null, new { @class = "form-control", type = "number", step = "0.01" })
+                            }
+                            else
+                            {
+                                @Html.TextBox(prop.PropertyName, null, new { @class = "form-control" })
+                            }
+                            @Html.ValidationMessage(prop.PropertyName)
+                        </div>
+                        break;
                 }
             }
+            <div class="form-group">
+                <div style="position:relative">
+                    <label>Image</label>
+                    <a class="btn @(Model.ImageMimeType == null ? "btn-outline-success": "btn-success")" href='javascript:;'>
+                        Choose File...
+                        <input type="file" name="Image" size="40"
+                               style="position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);opacity:0;background-color:transparent;color:transparent;"
+                               onchange='$("#upload-file-info").html($(this).val());' />
+                    </a>
+                    <span class="badge badge-info" id="upload-file-info"></span>
+                </div>
+                @if (Model.ImageData == null)
+                {
+                    <div class="form-control-plaintext">No Image</div>
+                }
+                else
+                {
+                    <img class="img-thumbnail" width="150" height="150" style="margin-top:4px"
+                         src="@Url.Action("GetImage","Product",new{ Model.ProductID })" />
+                }
+            </div>
         </div>
         <div class="card-footer">
             <input type="submit" value="Save" class="btn btn-info" />
